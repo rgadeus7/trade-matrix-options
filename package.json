@@ -1,0 +1,39 @@
+{
+  "name": "trade-matrix-options",
+  "version": "1.0.0",
+  "description": "TradeStation Options Chain Data Streaming Tool - Next.js",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 8002",
+    "build": "next build",
+    "start": "next start -p 8002",
+    "lint": "next lint",
+    "collect": "node simpleOptionsCollector.js"
+  },
+  "keywords": [
+    "tradestation",
+    "options",
+    "streaming",
+    "api",
+    "trading",
+    "nextjs"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "next": "^14.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.1",
+    "pg": "^8.11.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^14.0.0",
+    "typescript": "^5.0.0"
+  }
+}
