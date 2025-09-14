@@ -115,13 +115,77 @@ Query options data from the database.
 
 **Query Parameters:**
 - `symbol` (required): Symbol to query (e.g., AAPL, $SPX.X)
-- `startDate` (optional): Start date for date range query (ISO format)
+- `startDate` (optional): Start date for date range query (ISO format). When provided, returns aggregated data grouped by expiration_date and strike
 - `endDate` (optional): End date for date range query (ISO format)
 - `limit` (optional): Maximum number of records to return. Default: 100
 
+**Behavior:**
+- **Without startDate**: Returns latest individual options data
+- **With startDate**: Returns aggregated data grouped by expiration_date and strike, summing mid prices of call and put options for each strike
+- **Special SPX handling**: When symbol is "SPX" and startDate is provided, automatically queries both SPX and SPXW symbols and combines the results
+
 **Examples:**
-- `GET /api/options-data?symbol=AAPL&limit=50`
-- `GET /api/options-data?symbol=AAPL&startDate=2025-09-01&endDate=2025-09-30`
+- `GET /api/options-data?symbol=AAPL&limit=50` - Latest individual options
+- `GET /api/options-data?symbol=AAPL&startDate=2025-09-01&endDate=2025-09-30` - Aggregated by strike
+- `GET /api/options-data?symbol=TSLA&startDate=2025-09-20` - Aggregated TSLA data from 2025-09-20 onwards
+- `GET /api/options-data?symbol=SPX&startDate=2025-09-20` - Aggregated SPX + SPXW data from 2025-09-20 onwards
+
+**Aggregated Response Format (when startDate is provided):**
+
+**Regular Symbol Example (TSLA):**
+```json
+{
+  "success": true,
+  "timestamp": "2025-09-13T16:15:00.000Z",
+  "parameters": {
+    "symbol": "TSLA",
+    "queried_symbols": ["TSLA"],
+    "startDate": "2025-09-20",
+    "endDate": null,
+    "limit": 100
+  },
+  "summary": {
+    "total_records": 15,
+    "data_type": "aggregated_by_strike"
+  },
+  "data": [
+    {
+      "expiration_date": "2025-09-26T00:00:00Z",
+      "strike": "250.00",
+      "total_mid_price": "12.50",
+      "option_count": 2
+    }
+  ]
+}
+```
+
+**SPX Symbol Example (automatically includes SPXW):**
+```json
+{
+  "success": true,
+  "timestamp": "2025-09-13T16:15:00.000Z",
+  "parameters": {
+    "symbol": "SPX",
+    "queried_symbols": ["SPX", "SPXW"],
+    "startDate": "2025-09-20",
+    "endDate": null,
+    "limit": 100
+  },
+  "summary": {
+    "total_records": 25,
+    "data_type": "aggregated_by_strike"
+  },
+  "data": [
+    {
+      "expiration_date": "2025-09-26T00:00:00Z",
+      "strike": "6500.00",
+      "total_mid_price": "45.75",
+      "option_count": 4,
+      "symbols": "SPX, SPXW"
+    }
+  ]
+}
+```
 
 ## Postman Examples
 

@@ -18,6 +18,8 @@ out/
 # Output files
 output/
 *.json
+!package.json
+!package-lock.json
 
 # Logs
 logs

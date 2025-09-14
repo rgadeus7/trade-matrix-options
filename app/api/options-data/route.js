@@ -27,25 +27,37 @@ export async function GET(request) {
 
     let data;
     if (startDate) {
-      // Get data by date range (startDate only or startDate + endDate)
+      // Get aggregated data by date range (startDate only or startDate + endDate)
       const endDateParam = endDate || '9999-12-31'; // Use far future date if no endDate
-      data = await OptionsDatabase.getOptionsData(symbol, startDate, endDateParam);
+      
+      // Special case: if symbol is SPX, also query SPXW
+      if (symbol.toUpperCase() === 'SPX') {
+        const symbols = ['SPX', 'SPXW'];
+        data = await OptionsDatabase.getAggregatedOptionsDataMultiSymbol(symbols, startDate, endDateParam);
+      } else {
+        data = await OptionsDatabase.getAggregatedOptionsData(symbol, startDate, endDateParam);
+      }
     } else {
       // Get latest data
       data = await OptionsDatabase.getLatestOptionsData(symbol, limit);
     }
+
+    // Determine which symbols were actually queried
+    const queriedSymbols = symbol.toUpperCase() === 'SPX' && startDate ? ['SPX', 'SPXW'] : [symbol];
 
     return NextResponse.json({
       success: true,
       timestamp: new Date().toISOString(),
       parameters: {
         symbol,
+        queried_symbols: queriedSymbols,
         startDate,
         endDate,
         limit
       },
       summary: {
-        total_records: data.length
+        total_records: data.length,
+        data_type: startDate ? 'aggregated_by_strike' : 'latest_options'
       },
       data: data
     });
