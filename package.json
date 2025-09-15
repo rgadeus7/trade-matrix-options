@@ -8,7 +8,12 @@
     "build": "next build",
     "start": "next start -p 8002",
     "lint": "next lint",
-    "collect": "node simpleOptionsCollector.js"
+    "collect": "node simpleOptionsCollector.js",
+    "cron:all": "node .github/scripts/run-options-cron.js",
+    "cron:test": "node .github/scripts/run-options-cron.js test-single",
+    "cron:index": "node .github/scripts/run-options-cron.js index",
+    "cron:stock": "node .github/scripts/run-options-cron.js stock-monthly",
+    "cron:weekly": "node .github/scripts/run-options-cron.js spx-weekly"
   },
   "keywords": [
     "tradestation",

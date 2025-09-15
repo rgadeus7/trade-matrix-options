@@ -1,0 +1,50 @@
+name: Index Options Collection
+
+on:
+  schedule:
+    # Run every 30 minutes during market hours: 8:31 AM - 3:00 PM CST (2:31 PM - 9:00 PM UTC)
+    - cron: '31,01 14-20 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      config_id:
+        description: 'Specific configuration ID to run (optional)'
+        required: false
+        type: string
+
+env:
+  OPTIONS_API_KEY: ${{ secrets.OPTIONS_API_KEY }}
+
+jobs:
+  index-options:
+    runs-on: ubuntu-latest
+    name: Index Options Collection
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        
+    - name: Run index options collection
+      working-directory: ./trade-matrix-options
+      run: npm run cron:index
+   
+    - name: Run index weekly collection
+      working-directory: ./trade-matrix-options
+      run: npm run cron:spx-weekly"
+
+    - name: Notify on failure
+      if: failure()
+      uses: actions/github-script@v7
+      with:
+        script: |
+          github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: 'Index Options Collection Failed',
+            body: 'The index options collection job failed. Please check the logs.',
+            labels: ['bug', 'options', 'index']
+          })
