@@ -19,7 +19,7 @@
       "enabled": true,
       "parameters": {
         "symbols": ["$SPX.X","$VIX.X", "GLD","TLT"],
-        "topRecords": 2,
+        "topRecords": 4,
         "streamDuration": 1000,
         "expirationFilter": "Monthly"
       }
@@ -43,7 +43,7 @@
       "enabled": true,
       "parameters": {
         "symbols": ["AAPL","TSLA","AVGO","GOOG","MSFT","META","AMZN","NFLX"],
-        "topRecords": 2,
+        "topRecords": 3,
         "streamDuration": 500,
         "expirationFilter": "Monthly"
       }
