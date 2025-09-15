@@ -29,12 +29,7 @@ jobs:
         node-version: '18'
         
     - name: Run index options collection
-      working-directory: ./trade-matrix-options
       run: npm run cron:index
-   
-    - name: Run index weekly collection
-      working-directory: ./trade-matrix-options
-      run: npm run cron:spx-weekly"
 
     - name: Notify on failure
       if: failure()

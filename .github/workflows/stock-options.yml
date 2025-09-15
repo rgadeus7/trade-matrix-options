@@ -29,7 +29,6 @@ jobs:
         node-version: '18'
         
     - name: Run stock options collection
-      working-directory: ./trade-matrix-options
       run: npm run cron:stock
       
     - name: Notify on failure
