@@ -25,22 +25,40 @@ const configId = args[0]; // Optional: specific config ID to run
 
 // Load configuration from JSON file
 function loadConfigurations() {
+  // Debug: Show current working directory and script location
+  console.log(`🔍 Current working directory: ${process.cwd()}`);
+  console.log(`🔍 Script location: ${__dirname}`);
+  
   // Try multiple possible paths for different environments
   const possiblePaths = [
     path.join(__dirname, '..', 'config', 'options-config.json'), // Local development
     path.join(__dirname, '..', '..', '.github', 'config', 'options-config.json'), // GitHub Actions
-    path.join(process.cwd(), '.github', 'config', 'options-config.json') // Fallback from current working directory
+    path.join(process.cwd(), '.github', 'config', 'options-config.json'), // Fallback from current working directory
+    path.join(process.cwd(), 'trade-matrix-options', '.github', 'config', 'options-config.json') // Alternative structure
   ];
+  
+  // Debug: List directory contents
+  try {
+    console.log(`🔍 Contents of current directory:`, fs.readdirSync(process.cwd()));
+    if (fs.existsSync(path.join(process.cwd(), '.github'))) {
+      console.log(`🔍 Contents of .github directory:`, fs.readdirSync(path.join(process.cwd(), '.github')));
+    }
+  } catch (error) {
+    console.log(`🔍 Could not list directory contents: ${error.message}`);
+  }
   
   for (const configPath of possiblePaths) {
     try {
+      console.log(`🔍 Checking path: ${configPath}`);
       if (fs.existsSync(configPath)) {
         const configData = fs.readFileSync(configPath, 'utf8');
         console.log(`📁 Loaded configuration from: ${configPath}`);
         return JSON.parse(configData);
+      } else {
+        console.log(`❌ Path does not exist: ${configPath}`);
       }
     } catch (error) {
-      // Continue to next path
+      console.log(`❌ Error checking path ${configPath}: ${error.message}`);
     }
   }
   
