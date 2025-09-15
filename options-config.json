@@ -1,0 +1,52 @@
+{
+  "configurations": [
+    {
+      "id": "test-single",
+      "name": "Test Single Symbol",
+      "description": "Testing with just one symbol",
+      "enabled": false,
+      "parameters": {
+        "symbols": ["$SPX.X"],
+        "topRecords": 1,
+        "streamDuration": 1000,
+        "expirationFilter": "Monthly"
+      }
+    },
+    {
+      "id": "index-monthly",
+      "name": "All Index Options Monthly Options",
+      "description": "All Index Monthly options collection",
+      "enabled": true,
+      "parameters": {
+        "symbols": ["$SPX.X","$VIX.X", "GLD","TLT"],
+        "topRecords": 2,
+        "streamDuration": 1000,
+        "expirationFilter": "Monthly"
+      }
+    },
+    {
+      "id": "spx-weekly",
+      "name": "SPX Weekly Options",
+      "description": "SPX weekly options collection",
+      "enabled": true,
+      "parameters": {
+        "symbols": ["$SPXW.X"],
+        "topRecords": 3,
+        "streamDuration": 500,
+        "expirationFilter": "Weekly"
+      }
+    },
+    {
+      "id": "stock-monthly",
+      "name": "All Stock Options Monthly Options",
+      "description": "All Stock Monthly options collection",
+      "enabled": true,
+      "parameters": {
+        "symbols": ["AAPL","TSLA","AVGO","GOOG","MSFT","META","AMZN","NFLX"],
+        "topRecords": 2,
+        "streamDuration": 500,
+        "expirationFilter": "Monthly"
+      }
+    }
+  ]
+}
