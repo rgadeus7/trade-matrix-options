@@ -25,15 +25,28 @@ const configId = args[0]; // Optional: specific config ID to run
 
 // Load configuration from JSON file
 function loadConfigurations() {
-  const configPath = path.join(__dirname, '..', 'config', 'options-config.json');
-  try {
-    const configData = fs.readFileSync(configPath, 'utf8');
-    return JSON.parse(configData);
-  } catch (error) {
-    console.error(`❌ Failed to load configuration file: ${error.message}`);
-    console.error(`📁 Expected config file at: ${configPath}`);
-    process.exit(1);
+  // Try multiple possible paths for different environments
+  const possiblePaths = [
+    path.join(__dirname, '..', 'config', 'options-config.json'), // Local development
+    path.join(__dirname, '..', '..', '.github', 'config', 'options-config.json'), // GitHub Actions
+    path.join(process.cwd(), '.github', 'config', 'options-config.json') // Fallback from current working directory
+  ];
+  
+  for (const configPath of possiblePaths) {
+    try {
+      if (fs.existsSync(configPath)) {
+        const configData = fs.readFileSync(configPath, 'utf8');
+        console.log(`📁 Loaded configuration from: ${configPath}`);
+        return JSON.parse(configData);
+      }
+    } catch (error) {
+      // Continue to next path
+    }
   }
+  
+  console.error(`❌ Failed to load configuration file from any of these locations:`);
+  possiblePaths.forEach(p => console.error(`  - ${p}`));
+  process.exit(1);
 }
 
 // Environment variables
