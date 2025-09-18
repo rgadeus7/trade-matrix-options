@@ -9,7 +9,10 @@
         "symbols": ["$SPX.X"],
         "topRecords": 1,
         "streamDuration": 1000,
-        "expirationFilter": "Monthly"
+        "expirationFilter": "Monthly",
+        "saveToDatabase": true,
+        "cleanupOldData": true,
+        "keepHours": 0.5
       }
     },
     {
@@ -18,10 +21,13 @@
       "description": "All Index Monthly options collection",
       "enabled": true,
       "parameters": {
-        "symbols": ["$SPX.X","$VIX.X", "GLD","TLT"],
+        "symbols": ["$SPX.X","$VIX.X", "GLD","TLT","SPY","QQQ"],
         "topRecords": 4,
         "streamDuration": 1000,
-        "expirationFilter": "Monthly"
+        "expirationFilter": "Monthly",
+        "saveToDatabase": true,
+        "cleanupOldData": true,
+        "keepHours": 0.5
       }
     },
     {
@@ -33,7 +39,10 @@
         "symbols": ["$SPXW.X"],
         "topRecords": 3,
         "streamDuration": 500,
-        "expirationFilter": "Weekly"
+        "expirationFilter": "Weekly",
+        "saveToDatabase": true,
+        "cleanupOldData": true,
+        "keepHours": 0.5
       }
     },
     {
@@ -42,10 +51,13 @@
       "description": "All Stock Monthly options collection",
       "enabled": true,
       "parameters": {
-        "symbols": ["AAPL","TSLA","AVGO","GOOG","MSFT","META","AMZN","NFLX"],
+        "symbols": ["AAPL","TSLA","AVGO","GOOG","MSFT","META","AMZN","NFLX","NVDA"],
         "topRecords": 3,
         "streamDuration": 500,
-        "expirationFilter": "Monthly"
+        "expirationFilter": "Monthly",
+        "saveToDatabase": true,
+        "cleanupOldData": true,
+        "keepHours": 0.5
       }
     }
   ]

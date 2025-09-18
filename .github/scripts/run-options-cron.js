@@ -159,7 +159,9 @@ async function runOptionsCollection() {
           topRecords: config.parameters.topRecords,
           streamDuration: config.parameters.streamDuration,
           expirationFilter: config.parameters.expirationFilter,
-          saveToDatabase: config.parameters.saveToDatabase !== undefined ? config.parameters.saveToDatabase : true
+          saveToDatabase: config.parameters.saveToDatabase !== undefined ? config.parameters.saveToDatabase : true,
+          cleanupOldData: config.parameters.cleanupOldData !== undefined ? config.parameters.cleanupOldData : true,
+          keepHours: config.parameters.keepHours !== undefined ? config.parameters.keepHours : 0.5
         };
         
         console.log(`📋 Request for ${symbol}:`, JSON.stringify(data, null, 2));

@@ -13,7 +13,11 @@
     "cron:test": "node .github/scripts/run-options-cron.js test-single",
     "cron:index": "node .github/scripts/run-options-cron.js index",
     "cron:stock": "node .github/scripts/run-options-cron.js stock-monthly",
-    "cron:weekly": "node .github/scripts/run-options-cron.js spx-weekly"
+    "cron:weekly": "node .github/scripts/run-options-cron.js spx-weekly",
+    "cleanup": "node cleanup-options-data.js",
+    "cleanup:dry": "node cleanup-options-data.js --all --dry-run",
+    "cleanup:all": "node cleanup-options-data.js --all",
+    "cleanup:symbols": "node cleanup-options-data.js --symbols"
   },
   "keywords": [
     "tradestation",
