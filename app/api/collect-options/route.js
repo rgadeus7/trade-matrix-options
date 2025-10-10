@@ -51,9 +51,14 @@ export async function POST(request) {
     // Clean up old data if requested
     let cleanupResult = null;
     if (saveToDatabase && cleanupOldData) {
-      console.log(`🧹 Cleaning up old data for symbols: ${collector.symbols.join(', ')} (keeping last ${keepHours} hours)...`);
+      // Normalize symbols for cleanup (remove $ and .X suffix to match database storage)
+      const normalizedSymbols = collector.symbols.map(symbol => {
+        return symbol.replace(/^\$/, '').replace(/\.X$/, '');
+      });
+      
+      console.log(`🧹 Cleaning up old data for symbols: ${collector.symbols.join(', ')} (normalized: ${normalizedSymbols.join(', ')}) (keeping last ${keepHours} hours)...`);
       try {
-        cleanupResult = await OptionsDatabase.cleanupOldOptionsData(collector.symbols, keepHours, false);
+        cleanupResult = await OptionsDatabase.cleanupOldOptionsData(normalizedSymbols, keepHours, false);
         console.log(`✅ Cleanup completed: ${cleanupResult.totalDeleted} old records deleted`);
       } catch (cleanupError) {
         console.error('❌ Cleanup failed:', cleanupError.message);
