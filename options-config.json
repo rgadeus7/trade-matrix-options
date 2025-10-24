@@ -51,7 +51,7 @@
       "description": "All Stock Monthly options collection",
       "enabled": true,
       "parameters": {
-        "symbols": ["AAPL","TSLA","AVGO","GOOG","MSFT","META","AMZN","NFLX","NVDA","SMH","PLTR","HOOD"],
+        "symbols": ["AAPL","TSLA","AVGO","GOOG","MSFT","META","AMZN","NFLX","NVDA","SMH","PLTR","HOOD","MSTR","ORCL","CRM'],
         "topRecords": 3,
         "streamDuration": 500,
         "expirationFilter": "Monthly",
@@ -62,4 +62,5 @@
     }
   ]
 }
+
 
